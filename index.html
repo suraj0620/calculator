@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Rectangle Perimeter Calculator</title>
+  <style>
+    body{
+      margin:0;
+      background:linear-gradient(135deg,#f6f6f7,#e4e7e9);
+      display:flex;align-items:center;justify-content:center;
+      height:100vh;font-family:sans-serif;
+    }
+    .card{
+      background:rgba(255,255,255,0.9);
+      padding:1.5rem;
+      border-radius:14px;
+      width:100%;max-width:420px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    }
+    h1{
+      margin:0;font-size:1.3rem;color:#004f73;
+    }
+    p{
+      margin:0.5rem 0 1rem;color:#555;
+    }
+    label{
+      display:block;margin-top:0.6rem;margin-bottom:0.2rem;color:#333;font-weight:bold;
+    }
+    input{
+      width:100%;padding:0.6rem;border-radius:8px;
+      border:1px solid #ccc;font-size:1rem;
+    }
+    .actions{
+      display:flex;gap:0.6rem;margin-top:0.8rem;
+    }
+    button{
+      flex:1;padding:0.6rem;border:none;border-radius:8px;
+      background:#0072ff;color:white;font-weight:bold;cursor:pointer;
+    }
+    button.secondary{
+      background:white;color:#0072ff;border:1px solid #0072ff;
+    }
+    .error{
+      color:#dc2626;margin-top:0.5rem;font-size:0.85rem;
+    }
+    .result{
+      margin-top:1rem;padding:0.8rem;border-radius:8px;
+      background:#e6f4ff;border:1px solid #b3e0ff;
+      display:flex;justify-content:space-between;align-items:center;
+      color:#004f73;font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Rectangle Perimeter Calculator</h1> <br>
+
+    <label for="length">Length</label>
+    <input id="length" type="number" min="0" step="any">
+
+    <label for="breadth">Breadth</label>
+    <input id="breadth" type="number" min="0" step="any">
+
+    <div class="actions">
+      <button id="calcBtn">Calculate</button>
+      <button id="resetBtn" class="secondary">Reset</button>
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result" style="display:none;">
+      <span>Perimeter</span>
+      <strong id="resValue">0</strong>
+    </div>
+  </main>
+
+  <script>
+    const lengthInput = document.getElementById('length');
+    const breadthInput = document.getElementById('breadth');
+    const calcBtn = document.getElementById('calcBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultBox = document.getElementById('result');
+    const resValue = document.getElementById('resValue');
+    const errorBox = document.getElementById('error');
+
+    calcBtn.onclick = function() {
+      errorBox.textContent = "";
+      const l = parseFloat(lengthInput.value);
+      const b = parseFloat(breadthInput.value);
+
+      if (isNaN(l) || isNaN(b)) {
+        errorBox.textContent = "Please enter valid numbers.";
+        resultBox.style.display = "none";
+        return;
+      }
+      if (l < 0 || b < 0) {
+        errorBox.textContent = "Length and breadth must be non-negative.";
+        resultBox.style.display = "none";
+        return;
+      }
+
+      const perimeter = 2 * (l + b);
+      resValue.textContent = Number.isInteger(perimeter) ? perimeter : perimeter.toFixed(2);
+      resultBox.style.display = "flex";
+    };
+
+    resetBtn.onclick = function() {
+      lengthInput.value = "";
+      breadthInput.value = "";
+      errorBox.textContent = "";
+      resultBox.style.display = "none";
+    };
+  </script>
+</body>
+</html>
